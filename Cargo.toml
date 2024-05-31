@@ -1,0 +1,13 @@
+[package]
+name = "simplers"
+version = "1.0.1"
+edition = "2021"
+description = "Simplification of to complex stuff in rust"
+readme = "README.md"
+authors = ["Coderspark"]
+license = "Apache-2.0"
+exclude = [
+    ".gitignore"
+]
+
+[dependencies]
