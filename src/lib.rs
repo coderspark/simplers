@@ -1,17 +1,12 @@
 use std::*;
-use std::ops::Add;
+use std::io::{self, Write};
 
-pub fn input<S: Into<Option<&'static str>>>(s: S) -> String {
-    let s_ref = s.into();
-
-    if let Some(s_str) = s_ref {
-        print!("{}", s_str);
-    }
-
-    let mut val = String::new();
-    std::io::stdin().read_line(&mut val).expect("Something went wrong with the input.");
-
-    return val[0..val.len() - 1].to_string();
+pub fn input<T: AsRef<str> + std::fmt::Display>(iptext: T) -> String {
+    let mut ip = String::new();
+    print!("{}", iptext);
+    io::stdout().flush().expect("Failed to flush stdout"); // Ensure the prompt is displayed before input
+    io::stdin().read_line(&mut ip).expect("Error getting input");
+    return ip.trim_end().to_owned();
 }
 
 pub struct Color {
@@ -56,31 +51,15 @@ impl Weight {
     pub const FASTBLINK: Weight = Weight {id: 6};
 }
 
-impl Add<&str> for Color {
-    type Output = String;
-
-    fn add(self, rhs: &str) -> Self::Output{
-        format!("\x1B[38;2;{};{};{}m{}{}", self.r, self.g, self.b, rhs, "\x1B[0m")
-    }
+pub fn color<T: AsRef<str> + std::fmt::Display>(text: T, clr: Color) -> String{
+    return format!("\x1B[38;2;{};{};{}m{}\x1B[0m", clr.r, clr.g, clr.b, text);
 }
 
-impl Add<&str> for Weight {
-    type Output = String;
-
-    fn add(self, rhs: &str) -> Self::Output {
-        return format!("\x1B[{}m{}\x1B[0m", self.id, rhs);
-    }
+pub fn weigh<T: AsRef<str> + std::fmt::Display>(text: T, wht: Weight) -> String{
+    return format!("\x1B[{}m{}\x1B[0m", wht.id, text);
 }
 
-pub fn color(text: &'static str, clr: Color) -> String{
-    return clr + text;
-}
-
-pub fn weigh(text: &'static str, wht: Weight) -> String{
-    return wht + text;
-}
-
-pub fn input_color<S: Into<Option<&'static str>>>(s: S, clr: Color) -> String {
+pub fn input_color<T: AsRef<str> + std::fmt::Display>(s: T, clr: Color) -> String {
     let s_ref = s.into();
 
     if let Some(s_str) = s_ref {

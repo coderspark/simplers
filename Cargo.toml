@@ -1,8 +1,8 @@
 [package]
 name = "simplers"
-version = "1.0.4"
+version = "1.0.8"
 edition = "2021"
-description = "Simplification of to complex stuff in rust"
+description = "Simplification of too complex stuff in rust"
 readme = "README.md"
 authors = ["Coderspark"]
 license = "Apache-2.0"
